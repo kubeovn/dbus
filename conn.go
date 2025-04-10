@@ -117,7 +117,7 @@ func SessionBusPrivateHandler(handler Handler, signalHandler SignalHandler) (*Co
 
 // SystemBus returns a shared connection to the system bus, connecting to it if
 // not already done.
-func SystemBus() (conn *Conn, err error) {
+func SystemBus(opts ...ConnOption) (conn *Conn, err error) {
 	systemBusLck.Lock()
 	defer systemBusLck.Unlock()
 	if systemBus != nil &&
@@ -129,7 +129,7 @@ func SystemBus() (conn *Conn, err error) {
 			systemBus = conn
 		}
 	}()
-	conn, err = ConnectSystemBus()
+	conn, err = ConnectSystemBus(opts...)
 	return
 }
 
